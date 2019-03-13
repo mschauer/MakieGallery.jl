@@ -333,7 +333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "text",
     "category": "section",
-    "text": "textAvailable attributes and their defaults for Text{...} are:   align           (:left, :bottom)\n  alpha           1.0\n  color           :black\n  font            \"Dejavu Sans\"\n  linewidth       1\n  overdraw        false\n  position        Float32[0.0, 0.0]\n  rotation        0.0\n  strokecolor     (:black, 0.0)\n  strokewidth     0\n  textsize        20\n  transparency    false\n  visible         true(Image: library lines 222:222) (Image: library lines 232:247) (Image: library lines 87:116) (Image: library lines 235:260)"
+    "text": "textAvailable attributes and their defaults for Text{...} are:   align           (:left, :bottom)\n  alpha           1.0\n  color           :blue\n  font            \"Chilanka\"\n  linewidth       1\n  overdraw        false\n  position        Float32[0.0, 0.0]\n  rotation        0.0\n  strokecolor     (:black, 0.0)\n  strokewidth     0\n  textsize        20\n  transparency    false\n  visible         true(Image: library lines 222:222) (Image: library lines 232:247) (Image: library lines 87:116) (Image: library lines 235:260)"
 },
 
 {
@@ -349,7 +349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "meshscatter",
     "category": "section",
-    "text": "meshscatterAvailable attributes and their defaults for MeshScatter{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  marker          GeometryTypes.HyperSphere{3,Float32}(Float32[0.0, 0.0, 0.0], 1.0f0)\n  markersize      0.1\n  overdraw        false\n  rotations       1.0 + 0.0im + 0.0jm + 0.0km\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 28:53) (Image: library lines 134:139) (Image: library lines 153:168) (Image: library lines 334:383) (Image: library lines 413:415) (Image: library lines 591:613) (Image: library lines 120:164) (Image: library lines 4:63)"
+    "text": "meshscatterAvailable attributes and their defaults for MeshScatter{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  marker          GeometryTypes.HyperSphere{3,Float32}(Float32[0.0, 0.0, 0.0], 1.0f0)\n  markersize      0.1\n  overdraw        false\n  rotations       1.0 + 0.0im + 0.0jm + 0.0km\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 29:54) (Image: library lines 135:140) (Image: library lines 154:169) (Image: library lines 335:384) (Image: library lines 414:416) (Image: library lines 593:615) (Image: library lines 120:164) (Image: library lines 4:63)"
 },
 
 {
@@ -365,15 +365,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "scatter",
     "category": "section",
-    "text": "scatterAvailable attributes and their defaults for Scatter{...} are:   alpha             1.0\n  color             :black\n  colormap          :viridis\n  colorrange        AbstractPlotting.Automatic()\n  distancefield     nothing\n  glowcolor         RGBA{N0f8}(0.0,0.0,0.0,0.0)\n  glowwidth         0.0\n  linewidth         1\n  marker            GeometryTypes.HyperSphere{2,T} where T\n  marker_offset     AbstractPlotting.Automatic()\n  markersize        0.1\n  overdraw          false\n  rotations         Billboard()\n  strokecolor       RGBA{N0f8}(0.0,0.0,0.0,0.0)\n  strokewidth       0.0\n  transform_marker  false\n  transparency      false\n  uv_offset_width   Float32[0.0, 0.0, 0.0, 0.0]\n  visible           true(Image: library lines 5:8) (Image: library lines 12:15) (Image: library lines 10:21) (Image: library lines 56:56) (Image: library lines 161:165) (Image: library lines 188:192) (Image: library lines 211:217) (Image: library lines 251:269) (Image: library lines 273:304) (Image: library lines 309:392) (Image: library lines 143:143) (Image: library lines 147:147) (Image: library lines 390:399) (Image: library lines 402:403) (Image: library lines 455:467) (Image: library lines 471:472) (Image: library lines 3:51) (Image: library lines 55:67) (Image: library lines 71:82) (Image: library lines 220:251) (Image: library lines 255:299) (Image: library lines 4:32) (Image: library lines 37:41) (Image: library lines 61:62) (Image: library lines 66:73) (Image: library lines 77:77) (Image: library lines 85:89) (Image: library lines 4:10) (Image: library lines 4:94)"
-},
-
-{
-    "location": "functions-overview.html#AbstractPlotting.mesh",
-    "page": "Plotting functions overview",
-    "title": "AbstractPlotting.mesh",
-    "category": "function",
-    "text": "`mesh(x, y, z)`, `mesh(mesh_object)`, `mesh(x, y, z, faces)`, or `mesh(xyz, faces)`\n\nPlots a 3D mesh.\n\n\n\n\n\n"
+    "text": "scatterAvailable attributes and their defaults for Scatter{...} are:   alpha             1.0\n  color             :blue\n  colormap          :viridis\n  colorrange        AbstractPlotting.Automatic()\n  distancefield     nothing\n  glowcolor         RGBA{N0f8}(0.0,0.0,0.0,0.0)\n  glowwidth         0.0\n  linewidth         1\n  marker            GeometryTypes.HyperSphere{2,T} where T\n  marker_offset     AbstractPlotting.Automatic()\n  markersize        0.1\n  overdraw          false\n  rotations         Billboard()\n  strokecolor       RGBA{N0f8}(0.0,0.0,0.0,0.0)\n  strokewidth       0.0\n  transform_marker  false\n  transparency      false\n  uv_offset_width   Float32[0.0, 0.0, 0.0, 0.0]\n  visible           true(Image: library lines 5:8) (Image: library lines 12:15) (Image: library lines 10:21) (Image: library lines 56:56) (Image: library lines 161:165) (Image: library lines 188:192) (Image: library lines 211:217) (Image: library lines 251:269) (Image: library lines 273:304) (Image: library lines 309:392) (Image: library lines 144:144) (Image: library lines 148:148) (Image: library lines 391:400) (Image: library lines 403:404) (Image: library lines 456:468) (Image: library lines 472:473) (Image: library lines 3:51) (Image: library lines 55:67) (Image: library lines 71:82) (Image: library lines 220:251) (Image: library lines 255:299) (Image: library lines 4:32) (Image: library lines 37:41) (Image: library lines 61:62) (Image: library lines 66:73) (Image: library lines 77:77) (Image: library lines 85:89) (Image: library lines 4:10) (Image: library lines 4:94)"
 },
 
 {
@@ -381,7 +373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "mesh",
     "category": "section",
-    "text": "meshAvailable attributes and their defaults for Mesh{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  interpolate     false\n  linewidth       1\n  overdraw        false\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 109:132) (Image: library lines 135:135) (Image: library lines 4:13) (Image: library lines 16:24) (Image: library lines 60:63) (Image: library lines 66:67) (Image: library lines 70:79) (Image: library lines 82:83) (Image: library lines 280:286) (Image: library lines 334:383) (Image: library lines 441:447) (Image: library lines 451:451) (Image: library lines 476:485) (Image: library lines 396:539)"
+    "text": "meshAvailable attributes and their defaults for Mesh{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  interpolate     false\n  linewidth       1\n  overdraw        false\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 109:132) (Image: library lines 135:135) (Image: library lines 4:14) (Image: library lines 17:25) (Image: library lines 61:64) (Image: library lines 67:68) (Image: library lines 71:80) (Image: library lines 83:84) (Image: library lines 281:287) (Image: library lines 335:384) (Image: library lines 442:448) (Image: library lines 452:452) (Image: library lines 477:486) (Image: library lines 396:539)"
 },
 
 {
@@ -397,7 +389,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "linesegments",
     "category": "section",
-    "text": "linesegmentsAvailable attributes and their defaults for LineSegments{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linestyle       nothing\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 70:75) (Image: library lines 169:177) (Image: library lines 489:536) (Image: library lines 305:391) (Image: library lines 265:290) (Image: library lines 4:63)"
+    "text": "linesegmentsAvailable attributes and their defaults for LineSegments{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linestyle       :dot\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 70:75) (Image: library lines 169:177) (Image: library lines 490:538) (Image: library lines 305:391) (Image: library lines 264:289) (Image: library lines 4:63)"
 },
 
 {
@@ -413,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "lines",
     "category": "section",
-    "text": "linesAvailable attributes and their defaults for Lines{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linestyle       nothing\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 188:192) (Image: library lines 195:196) (Image: library lines 309:392) (Image: library lines 400:423) (Image: library lines 127:130) (Image: library lines 390:399) (Image: library lines 489:536) (Image: library lines 541:575) (Image: library lines 3:51) (Image: library lines 87:116) (Image: library lines 396:539) (Image: library lines 46:56) (Image: library lines 194:230) (Image: library lines 4:10)"
+    "text": "linesAvailable attributes and their defaults for Lines{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linestyle       :dot\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 188:192) (Image: library lines 195:196) (Image: library lines 309:392) (Image: library lines 400:427) (Image: library lines 128:131) (Image: library lines 391:400) (Image: library lines 490:538) (Image: library lines 543:577) (Image: library lines 3:51) (Image: library lines 87:116) (Image: library lines 396:539) (Image: library lines 46:56) (Image: library lines 194:230) (Image: library lines 4:10)"
 },
 
 {
@@ -429,7 +421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "surface",
     "category": "section",
-    "text": "surfaceAvailable attributes and their defaults for Surface{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  overdraw        false\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 89:97) (Image: library lines 100:108) (Image: library lines 114:121) (Image: library lines 231:239) (Image: library lines 243:258) (Image: library lines 265:276) (Image: library lines 294:330) (Image: library lines 419:436) (Image: library lines 579:587) (Image: library lines 293:307) (Image: library lines 55:86) (Image: library lines 4:10) (Image: library lines 19:23)"
+    "text": "surfaceAvailable attributes and their defaults for Surface{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  overdraw        false\n  shading         true\n  transparency    false\n  visible         true(Image: library lines 90:98) (Image: library lines 101:109) (Image: library lines 115:122) (Image: library lines 232:240) (Image: library lines 244:259) (Image: library lines 266:277) (Image: library lines 295:331) (Image: library lines 420:437) (Image: library lines 581:589) (Image: library lines 292:306) (Image: library lines 55:86) (Image: library lines 4:10) (Image: library lines 19:23)"
 },
 
 {
@@ -445,7 +437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "volume",
     "category": "section",
-    "text": "volumeAvailable attributes and their defaults for Volume{...} are:   absorption      1.0f0\n  algorithm       :iso\n  alpha           1.0\n  color           nothing\n  colormap        :viridis\n  colorrange      (0, 1)\n  isorange        0.05f0\n  isovalue        0.5f0\n  linewidth       1\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 57:57) (Image: library lines 173:188) (Image: library lines 632:649) (Image: library lines 19:24) (Image: library lines 28:33) (Image: library lines 37:42)"
+    "text": "volumeAvailable attributes and their defaults for Volume{...} are:   absorption      1.0f0\n  algorithm       :iso\n  alpha           1.0\n  color           nothing\n  colormap        :viridis\n  colorrange      (0, 1)\n  isorange        0.05f0\n  isovalue        0.5f0\n  linewidth       1\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 58:58) (Image: library lines 174:189) (Image: library lines 634:651) (Image: library lines 19:24) (Image: library lines 28:33) (Image: library lines 37:42)"
 },
 
 {
@@ -461,7 +453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "heatmap",
     "category": "section",
-    "text": "heatmapAvailable attributes and their defaults for Heatmap{...} are:   alpha           1.0\n  color           :black\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  interpolate     false\n  levels          1\n  linewidth       0.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 65:66) (Image: library lines 5:6) (Image: library lines 60:80) (Image: library lines 141:148) (Image: library lines 207:207) (Image: library lines 273:304) (Image: library lines 173:188) (Image: library lines 55:67) (Image: library lines 220:251) (Image: library lines 4:10) (Image: library lines 19:23)"
+    "text": "heatmapAvailable attributes and their defaults for Heatmap{...} are:   alpha           1.0\n  color           :blue\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  interpolate     false\n  levels          1\n  linewidth       0.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 65:66) (Image: library lines 5:6) (Image: library lines 60:80) (Image: library lines 141:148) (Image: library lines 207:207) (Image: library lines 273:304) (Image: library lines 174:189) (Image: library lines 55:67) (Image: library lines 220:251) (Image: library lines 4:10) (Image: library lines 19:23)"
 },
 
 {
@@ -477,7 +469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "image",
     "category": "section",
-    "text": "imageAvailable attributes and their defaults for Image{...} are:   alpha           1.0\n  color           :black\n  colormap        ColorTypes.RGBA{Float32}[RGBA{Float32}(0.0,0.0,0.0,1.0), RGBA{Float32}(1.0,1.0,1.0,1.0)]\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 5:6) (Image: library lines 50:50) (Image: library lines 161:165) (Image: library lines 4:13) (Image: library lines 16:24) (Image: library lines 114:121) (Image: library lines 231:239) (Image: library lines 402:403) (Image: library lines 93:118) (Image: library lines 19:23)"
+    "text": "imageAvailable attributes and their defaults for Image{...} are:   alpha           1.0\n  color           :blue\n  colormap        ColorTypes.RGBA{Float32}[RGBA{Float32}(0.0,0.0,0.0,1.0), RGBA{Float32}(1.0,1.0,1.0,1.0)]\n  colorrange      AbstractPlotting.Automatic()\n  linewidth       1\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 5:6) (Image: library lines 50:50) (Image: library lines 161:165) (Image: library lines 4:14) (Image: library lines 17:25) (Image: library lines 115:122) (Image: library lines 232:240) (Image: library lines 403:404) (Image: library lines 93:118) (Image: library lines 19:23)"
 },
 
 {
@@ -493,7 +485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "contour",
     "category": "section",
-    "text": "contourAvailable attributes and their defaults for Contour{...} are:   alpha           1.0\n  color           nothing\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  fillrange       false\n  levels          5\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 183:185) (Image: library lines 202:203) (Image: library lines 173:188) (Image: library lines 579:587) (Image: library lines 4:8) (Image: library lines 12:15) (Image: library lines 46:51) (Image: library lines 55:86) (Image: library lines 19:23)"
+    "text": "contourAvailable attributes and their defaults for Contour{...} are:   alpha           1.0\n  color           nothing\n  colormap        :viridis\n  colorrange      AbstractPlotting.Automatic()\n  fillrange       false\n  levels          5\n  linewidth       1.0\n  overdraw        false\n  transparency    false\n  visible         true(Image: library lines 183:185) (Image: library lines 202:203) (Image: library lines 174:189) (Image: library lines 581:589) (Image: library lines 4:8) (Image: library lines 12:15) (Image: library lines 46:51) (Image: library lines 55:86) (Image: library lines 19:23)"
 },
 
 {
@@ -509,7 +501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "arrows",
     "category": "section",
-    "text": "arrowsAvailable attributes and their defaults for Arrows{...} are:   arrowcolor   :black\n  arrowhead    AbstractPlotting.Automatic()\n  arrowsize    0.3\n  arrowtail    nothing\n  lengthscale  1.0f0\n  linecolor    :black\n  linestyle    nothing\n  linewidth    1\n  normalize    false\n  scale        Float32[1.0, 1.0, 1.0](Image: library lines 41:47) (Image: library lines 215:227) (Image: library lines 243:258)"
+    "text": "arrowsAvailable attributes and their defaults for Arrows{...} are:   arrowcolor   :black\n  arrowhead    AbstractPlotting.Automatic()\n  arrowsize    0.3\n  arrowtail    nothing\n  lengthscale  1.0f0\n  linecolor    :black\n  linestyle    nothing\n  linewidth    1\n  normalize    false\n  scale        Float32[1.0, 1.0, 1.0](Image: library lines 41:47) (Image: library lines 216:228) (Image: library lines 244:259)"
 },
 
 {
@@ -525,7 +517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "barplot",
     "category": "section",
-    "text": "barplotAvailable attributes and their defaults for BarPlot{...} are:   color        :black\n  colormap     :viridis\n  colorrange   AbstractPlotting.Automatic()\n  fillto       0.0\n  marker       GeometryTypes.HyperRectangle\n  strokecolor  :white\n  strokewidth  0\n  width        AbstractPlotting.Automatic()(Image: library lines 79:80) (Image: library lines 27:27)"
+    "text": "barplotAvailable attributes and their defaults for BarPlot{...} are:   color        :blue\n  colormap     :viridis\n  colorrange   AbstractPlotting.Automatic()\n  fillto       0.0\n  marker       GeometryTypes.HyperRectangle\n  strokecolor  :white\n  strokewidth  0\n  width        AbstractPlotting.Automatic()(Image: library lines 79:80) (Image: library lines 27:27)"
 },
 
 {
@@ -541,7 +533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "poly",
     "category": "section",
-    "text": "polyAvailable attributes and their defaults for Poly{...} are:   color        :black\n  colormap     :viridis\n  colorrange   AbstractPlotting.Automatic()\n  linestyle    nothing\n  shading      false\n  strokecolor  RGBA{Float32}(0.0f0,0.0f0,0.0f0,0.0f0)\n  strokewidth  0.0\n  visible      true(Image: library lines 32:38) (Image: library lines 84:106) (Image: library lines 169:177) (Image: library lines 87:116) (Image: library lines 168:216)"
+    "text": "polyAvailable attributes and their defaults for Poly{...} are:   color        :blue\n  colormap     :viridis\n  colorrange   AbstractPlotting.Automatic()\n  linestyle    nothing\n  shading      false\n  strokecolor  RGBA{Float32}(0.0f0,0.0f0,0.0f0,0.0f0)\n  strokewidth  0.0\n  visible      true(Image: library lines 32:38) (Image: library lines 84:106) (Image: library lines 169:177) (Image: library lines 87:116) (Image: library lines 168:216)"
 },
 
 {
@@ -581,7 +573,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting functions overview",
     "title": "vbox",
     "category": "section",
-    "text": "vboxAvailable attributes and their defaults for Combined{AbstractPlotting.vbox,T} where T are: (Image: library lines 60:80) (Image: library lines 265:276) (Image: library lines 71:82) (Image: library lines 120:164) (Image: library lines 305:391) (Image: library lines 396:539) (Image: library lines 265:290) (Image: library lines 4:10) (Image: library lines 19:23)"
+    "text": "vboxAvailable attributes and their defaults for Combined{AbstractPlotting.vbox,T} where T are: (Image: library lines 60:80) (Image: library lines 266:277) (Image: library lines 71:82) (Image: library lines 120:164) (Image: library lines 305:391) (Image: library lines 396:539) (Image: library lines 264:289) (Image: library lines 4:10) (Image: library lines 19:23)"
 },
 
 {
@@ -693,7 +685,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Colors",
     "title": "Colors",
     "category": "section",
-    "text": "Makie has support for you to color your plots however you want to. You can manipulate the color of a plot by using the color keyword, nd change the colormap by using the colormap keyword.For line plots, you can provide a single color or symbol that will color the entire line; or, you can provide an array of values that map to colors using a colormap.Any color symbol supported by Color.jl is supported, check out their page on named colors to see what you can get away with!  You can also pass RGB or RGBA values."
+    "text": "Makie has support for you to color your plots however you want to. You can manipulate the color of a plot by using the color keyword, nd change the colormap by using the colormap keyword."
+},
+
+{
+    "location": "colors.html#Colors-2",
+    "page": "Colors",
+    "title": "Colors",
+    "category": "section",
+    "text": "For line plots, you can provide a single color or symbol that will color the entire line; or, you can provide an array of values that map to colors using a colormap.Any color symbol supported by Color.jl is supported, check out their page on named colors to see what you can get away with!  You can also pass RGB or RGBA values."
 },
 
 {
@@ -702,6 +702,30 @@ var documenterSearchIndex = {"docs": [
     "title": "Colormaps",
     "category": "section",
     "text": "Colormaps are mappings of values to colors.  You can supply the coloring values using the color keyword argument, and the colormap will automatically be adjusted to fit those values.  THe default colormap is viridis, which looks like this:@example_database(\"Viridis color scheme\")You can copy this code and substitute cmap with any Colormap to show the colormap.Makie supports multiple colormap libraries.  Currently, Colors and ColorBrewer are inbuilt, and ColorSchemes and PerceptualColourMaps work as well.Natively, Makie supports these ColorBrewer colormaps (see their docs as well):@example_database(\"colormaps\")On top of this, you can use any ColorSchemes colormap as colormap = ColorSchemes.<colormap name>.colors.  Check out the ColorSchemes.jl docs for more information!Similarly, the PerceptualColourMaps library of colormaps can also be used (though it requires PyCall and may not play well with PackageCompiler system images).  This library is geared more towards \'publication quality\' plots, and you can see examples of its colormaps on the repo page."
+},
+
+{
+    "location": "colors.html#Color-legends-1",
+    "page": "Colors",
+    "title": "Color legends",
+    "category": "section",
+    "text": "To show the colormap and scaling, you can use a color legend.  Color legends can be automatically produced by the colorlegend function, to which a Plot object must be passed.  Its range and the colormap it shows can also be manually altered, as can many of its attributes.To simply produce a color legend and plot it to the left of the original plot, you can produce a colorlegend and vbox it.  In the example below, p1 is the initial Scene, with only one plot.scene = vbox(\n  p1,\n  colorlegend(\n    p1[end],            # get Plot object from Scene\n    camera = campixel!, # let vbox decide scene limits\n    raw = true          # no axes, other things as well\n  )\n)You can also pass keyword attributes to it, as shown below.@example_database(\"Line with varying colors\")"
+},
+
+{
+    "location": "theming.html#",
+    "page": "Config file",
+    "title": "Config file",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "theming.html#Config-file-1",
+    "page": "Config file",
+    "title": "Config file",
+    "category": "section",
+    "text": "One can store a config file in joinpath(homedir(), \".config\", \"makie\", \"theme.jl\") E.g. store this in theme.jl:Attributes(\n    font = \"Chilanka\",\n    backgroundcolor = :gray,\n    color = :blue,\n    linestyle = :dot,\n    linewidth = 3\n)To start Makie always with this theme!"
 },
 
 {

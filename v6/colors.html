@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Colors · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="help_functions.html">Help functions</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li class="current"><a class="toctext" href="colors.html">Colors</a><ul class="internal"><li><a class="toctext" href="#Colors-2">Colors</a></li><li><a class="toctext" href="#Colormaps-1">Colormaps</a></li><li><a class="toctext" href="#Libraries-1">Libraries</a></li><li><a class="toctext" href="#Color-legends-1">Color legends</a></li></ul></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Basics</li><li><a href="colors.html">Colors</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/colors.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Colors</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Colors-1" href="#Colors-1">Colors</a></h1><p><code>Makie</code> has support for you to color your plots however you want to. You can manipulate the color of a plot by using the <code>color</code> keyword, and change the colormap by using the <code>colormap</code> keyword.</p><h2><a class="nav-anchor" id="Colors-2" href="#Colors-2">Colors</a></h2><p>For line plots, you can provide a single color or symbol that will color the entire line; or, you can provide an array of values that map to colors using a colormap.</p><p>Any color symbol supported by Color.jl is supported, check out their page on <a href="http://juliagraphics.github.io/Colors.jl/latest/namedcolors.html">named colors</a> to see what you can get away with!  You can also pass RGB or RGBA values.</p><h2><a class="nav-anchor" id="Colormaps-1" href="#Colormaps-1">Colormaps</a></h2><p>Colormaps are mappings of values to colors.  You can supply the coloring values using the <code>color</code> keyword argument, and the colormap will automatically be adjusted to fit those values.  THe default colormap is <code>viridis</code>, which looks like this:</p><div><pre><code class="language-julia">using AbstractPlotting
+
+ c = to_colormap(:viridis) # get colors of colormap
+
+ image(         # to plot colors, an image is best
+    0..10,      # x range
+    0..1,       # y range
+    hcat(c, c), # reshape this to a matrix for the colors
+    show_axis = false # don&#39;t show axes
+ )
+
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <img src="https://simondanisch.github.io/ReferenceImages/gallery//viridis_color_scheme/media/image.jpg" alt="">
+
+    </p>
+</div>
+
+<p>You can copy this code and substitute <code>cmap</code> with any <code>Colormap</code> to show the colormap.</p><p><code>Makie</code> supports multiple colormap libraries.  Currently, support for colormaps provided by <code>PlotUtils</code> is inbuilt, meaning that any colormap symbol that works with Plots will also work with Makie.  Colormaps from the <code>ColorSchemes</code> package can be used by <code>colormap = ColorSchemes.&lt;name of colormap&gt;.colors</code>.  Similarly, colormaps from the <code>PerceptualColourMaps</code> package (which is a superset of the <code>colorcet</code> library) can be used by <code>colormap = PerceptualColourMaps.cgrad(&quot;&lt;name of colormap&gt;&quot;)</code>.  In principle, any Array of <code>RGB</code> values can be used as a colormap.</p><h3><a class="nav-anchor" id="Builtins-1" href="#Builtins-1">Builtins</a></h3><p>Color gradients are arranged into color libraries. To get a list of color libraries, use the <code>clibraries</code> function. To get a list of color gradients in each library, call <code>cgradients(library)</code>. <code>showlibrary(library)</code> creates a visual representation of color schemes. To change the active library, use <code>clibrary(library)</code>. This is only necessary in the case of namespace clashes, e.g. if there are multiple <code>:blues</code>. The gradients can be reversed by <code>Reverse(:&lt;gradient_name&gt;)</code>. The <code>clims::NTuple{2,Number}</code> attribute can be used to define the data values that correspond with the ends of the colormap.</p><p>PlotUtils bundles with it colormaps from many libraries.  As of the 16th of March, 2019, those are:</p><pre><code class="language-julia">:Plots    # default
+:cmocean
+:colorbrewer
+:colorcet</code></pre><p>Again, the <code>clibrary</code> function can be used to change the preferred colour library in case of namespae conflict.  For example, to prefer the use of <code>cmocean</code> colourmaps if available, you might call <code>clibrary(:cmocean)</code> before plotting.</p><h2><a class="nav-anchor" id="Libraries-1" href="#Libraries-1">Libraries</a></h2><h3><a class="nav-anchor" id="PLOTS-1" href="#PLOTS-1">PLOTS</a></h3><p>The default library.  Created by Nathaniel J. Smith, Stefan van der Walt, and (in the case of viridis) Eric Firing. Released under CC0 license / public domain dedication. Full license info available <a href="https://github.com/JuliaPlots/PlotUtils.jl/blob/master/LICENSE.md#matplotlib">here</a>.</p><p><img src="http://docs.juliaplots.org/latest/examples/img/colorschemes/Plots.png" alt="Plots colormaps"/></p><h3><a class="nav-anchor" id="CMOCEAN-1" href="#CMOCEAN-1">CMOCEAN</a></h3><p>Released under The MIT License (MIT) Copyright (c) 2015 Kristen M. Thyng. RGB values were taken from https://github.com/matplotlib/cmocean/tree/master/cmocean/rgb</p><p><img src="http://docs.juliaplots.org/latest/examples/img/colorschemes/cmocean.png" alt="cmocean colormaps"/></p><h3><a class="nav-anchor" id="COLORCET-1" href="#COLORCET-1">COLORCET</a></h3><p>Released under The MIT License (MIT) Copyright (c) 2015 Peter Kovesi. These are the perceptually correct color maps designed by Peter Kovesi and described in Peter Kovesi. Good Colour Maps: How to Design Them. arXiv:1509.03700 [cs.GR] 2015</p><p><img src="http://docs.juliaplots.org/latest/examples/img/colorschemes/colorcet.png" alt="Colorcet colormaps"/></p><h3><a class="nav-anchor" id="COLORBREWER-1" href="#COLORBREWER-1">COLORBREWER</a></h3><p>Created by Cynthia Brewer, Mark Harrower, and The Pennsylvania State University. Released under the Apache License, Version 2.0. Full license info available <a href="https://github.com/JuliaPlots/PlotUtils.jl/blob/master/LICENSE.md#colorbrewer">here</a>.</p><p><img src="http://docs.juliaplots.org/latest/examples/img/colorschemes/colorbrewer.png" alt="ColorBrewer colormaps"/></p><h3><a class="nav-anchor" id="MISC-1" href="#MISC-1">MISC</a></h3><p><img src="http://docs.juliaplots.org/latest/examples/img/colorschemes/misc.png" alt="Miscellaneous colormaps"/></p><h2><a class="nav-anchor" id="Color-legends-1" href="#Color-legends-1">Color legends</a></h2><p>To show the colormap and its scaling, you can use a color legend.  Color legends can be automatically produced by the <code>colorlegend</code> function, to which a Plot object must be passed.  Its range and the colormap it shows can also be manually altered, as can many of its attributes.</p><p>To simply produce a color legend and plot it to the left of the original plot, you can produce a colorlegend and <code>vbox</code> it.  In the example below, <code>p1</code> is the initial Scene, with only one plot.</p><pre><code class="language-julia">scene = vbox(
+  p1,
+  colorlegend(
+    p1[end],            # get Plot object from Scene
+    camera = campixel!, # let vbox decide scene limits
+    raw = true          # no axes, other things as well
+  )
+)</code></pre><p>Be warned that in its current form, this will look quite small compared to the size of the plot!</p><p>To fix that, you can theme it, as shown below:</p><div><pre><code class="language-julia">using AbstractPlotting
+ using ColorSchemes      # colormaps galore
+
+
+ t = range(0, stop=1, length=500) # time steps
+
+ θ = (6π) .* t    # angles
+
+ x = t .* cos.(θ) # x coords of spiral
+ y = t .* sin.(θ) # y coords of spiral
+
+ p1 = lines(
+     x,
+     y,
+     color = t,
+     colormap = ColorSchemes.magma.colors,
+     linewidth=8)
+
+ cm = colorlegend(
+     p1[end],             # access the plot of Scene p1
+     raw = true,          # without axes or grid
+     camera = campixel!,  # gives a concrete bounding box in pixels
+                          # so that the `vbox` gives you the right size
+     width = (            # make the colorlegend longer so it looks nicer
+         30,              # the width
+         540              # the height
+     )
+     )
+
+ scene_final = vbox(p1, cm) # put the colorlegend and the plot together in a `vbox`
+
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <img src="https://simondanisch.github.io/ReferenceImages/gallery//line_with_varying_colors/media/image.jpg" alt="">
+
+    </p>
+</div>
+
+<footer><hr/><a class="previous" href="plot-attributes.html"><span class="direction">Previous</span><span class="title">Plot attributes</span></a><a class="next" href="theming.html"><span class="direction">Next</span><span class="title">Config file</span></a></footer></article></body></html>

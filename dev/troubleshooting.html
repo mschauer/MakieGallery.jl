@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Troubleshooting · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="help_functions.html">Help functions</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li class="current"><a class="toctext" href="troubleshooting.html">Troubleshooting</a><ul class="internal"><li><a class="toctext" href="#Installation-issues-1">Installation issues</a></li><li class="toplevel"><a class="toctext" href="#Plotting-issues-1">Plotting issues</a></li><li><a class="toctext" href="#Dimension-too-large-1">Dimension too large</a></li><li><a class="toctext" href="#General-issues-1">General issues</a></li></ul></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Basics</li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/troubleshooting.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Troubleshooting</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Troubleshooting-1" href="#Troubleshooting-1">Troubleshooting</a></h1><h2><a class="nav-anchor" id="Installation-issues-1" href="#Installation-issues-1">Installation issues</a></h2><p>Here, we assume you are running Julia on the vanilla system image - no PackageCompiler goodness.  If you are using <code>PackageCompiler</code>, check out the page on compilation.</p><h3><a class="nav-anchor" id="No-Scene-displayed-or-GLMakie-fails-to-build-1" href="#No-Scene-displayed-or-GLMakie-fails-to-build-1">No <code>Scene</code> displayed or GLMakie fails to build</a></h3><p>If <code>Makie</code> builds, but when a plotting, no <code>Scene</code> is displayed, as in:</p><pre><code class="language-julia">julia&gt; using Makie
+
+julia&gt; lines([0,1], [0,1])
+Scene (960px, 540px):
+events:
+    window_area: GeometryTypes.HyperRectangle{2,Int64}([0, 0], [0, 0])
+    window_dpi: 100.0
+    window_open: false
+    mousebuttons: Set(AbstractPlotting.Mouse.Button[])
+    mouseposition: (0.0, 0.0)
+    mousedrag: notpressed
+    scroll: (0.0, 0.0)
+    keyboardbuttons: Set(AbstractPlotting.Keyboard.Button[])
+    unicode_input: Char[]
+    dropped_files: String[]
+    hasfocus: false
+    entered_window: false
+plots:
+   *Axis2D{...}
+   *Lines{...}
+subscenes:
+   *scene(960px, 540px)</code></pre><p>then, your backend may not have built correctly.  By default, Makie will try to use GLMakie as a backend, but if it does not build correctly for whatever reason, then scenes will not be displayed. Ensure that your graphics card supports OpenGL; if it does not (old models, or relatively old integrated graphics cards), then you may want to consider CairoMakie.</p><h1><a class="nav-anchor" id="Plotting-issues-1" href="#Plotting-issues-1">Plotting issues</a></h1><h2><a class="nav-anchor" id="Dimension-too-large-1" href="#Dimension-too-large-1">Dimension too large</a></h2><p>In general, plotting functions tend to plot whatever&#39;s given to them as a single texture.  This can lead to GL errors, or OpenGL failing silently.  To circumvent this, one can &#39;tile&#39; the plots (i.e., assemble them piece-by-piece) to decrease the individual texture size.</p><h3><a class="nav-anchor" id="d-plots-(heatmaps,-images,-etc.)-1" href="#d-plots-(heatmaps,-images,-etc.)-1">2d plots (heatmaps, images, etc.)</a></h3><pre><code class="language-julia">heatmap(rand(Float32, 24900, 26620))</code></pre><p>may either fail with an error</p><pre><code class="language-julia">   Error showing value of type Scene:
+ERROR: glTexImage 2D: width too large. Width: 24900
+[...]</code></pre><p>or fail silently:</p><p><img src="https://user-images.githubusercontent.com/32143268/55675737-96357280-5894-11e9-9170-1ffd21f544cc.png" alt="untiled heatmap"/></p><p>Tiling the plot, as shown below, yields a correct image.</p><pre><code class="language-julia">sc = Scene()
+data = rand(Float32, 24900, 26620)
+heatmap!(sc, data[1:end÷2, 1:end÷2])
+heatmap!(sc, data[(end÷2 + 1):end, 1:end÷2])
+heatmap!(sc, data[1:end÷2, (end÷2 + 1):end])
+heatmap!(sc, data[(end÷2 + 1):end, (end÷2 + 1):end])</code></pre><h3><a class="nav-anchor" id="d-plots-(volumes)-1" href="#d-plots-(volumes)-1">3d plots (volumes)</a></h3><p>The approach here is similar to that for the 2d plots, except that here there is a helpful function that gives the maximum texture size. You can check the maximum texture size with:</p><pre><code class="language-julia">using Makie, GLMakie, ModernGL
+# simple plot to open a window (needs to be open for opengl)
+display(scatter(rand(10)))
+glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE)</code></pre><p>and then just split the volume:</p><pre><code class="language-julia">vol = rand(506, 720, 1440)
+ranges = (1:256, 1:256, 1:256)
+scene = volume(ranges..., vol[ranges...])
+for i in 1:3
+    global ranges
+    ranges = ntuple(3) do j
+        s = j == i ? last(ranges[j]) : 1
+        e = j == i ? size(vol, j) : last(ranges[j])
+        s:e
+    end
+    volume!(ranges..., vol[ranges...])
+end
+scene</code></pre><h2><a class="nav-anchor" id="General-issues-1" href="#General-issues-1">General issues</a></h2><h3><a class="nav-anchor" id="My-font-doesn&#39;t-work!-1" href="#My-font-doesn&#39;t-work!-1">My font doesn&#39;t work!</a></h3><p>If <code>Makie</code> can&#39;t find your font, you can do two things:</p><ol><li><p>Check that the name matches and that the font is in one of the directories in:</p><ul><li><code>using FreeTypeAbstraction; FreeTypeAbstraction.valid_fontpaths</code></li></ul></li><li><p>You can add a custom font path via the environment variable:</p><ul><li><code>ENV[&quot;FREETYPE_ABSTRACTION_FONT_PATH&quot;] = &quot;/path/to/your/fonts&quot;</code></li></ul></li><li><p>Specify the path to the font; instead of <code>font = &quot;Noto&quot;</code>, you could write <code>joindir(homedir(), &quot;Noto.ttf&quot;)</code> or something.</p></li></ol><footer><hr/><a class="previous" href="output.html"><span class="direction">Previous</span><span class="title">Output</span></a><a class="next" href="why-makie.html"><span class="direction">Next</span><span class="title">Why <code>Makie</code>?</span></a></footer></article></body></html>

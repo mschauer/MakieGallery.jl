@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Animation · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="help_functions.html">Help functions</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li class="current"><a class="toctext" href="animation.html">Animation</a><ul class="internal"><li><a class="toctext" href="#A-minimal-example-1">A minimal example</a></li><li><a class="toctext" href="#A-simple-example-1">A simple example</a></li><li><a class="toctext" href="#More-complex-examples-1">More complex examples</a></li></ul></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Basics</li><li><a href="animation.html">Animation</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/animation.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Animation</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Animation-1" href="#Animation-1">Animation</a></h1><p><code>Makie.jl</code> has extensive support for animations; you can create arbitrary plots, and save them to:</p><ul><li><code>.mkv</code>  (the default, doesn&#39;t need to convert)</li><li><code>.mp4</code>  (good for Web, most supported format)</li><li><code>.webm</code> (smallest file size)</li><li><code>.gif</code>  (largest file size for the same quality)</li></ul><p>This is all made possible through the use of the <code>ffmpeg</code> tool, wrapped by <a href="https://github.com/JuliaIO/FFMPEG.jl"><code>FFMPEG.jl</code></a>.</p><p>Have a peek at <a href="interaction.html#Interaction-1">Interaction</a> for some more information once you&#39;re done with this.</p><h2><a class="nav-anchor" id="A-minimal-example-1" href="#A-minimal-example-1">A minimal example</a></h2><p>Simple animations are easy to make; all you need to do is wrap your changes in the <code>record</code> function.</p><h2><a class="nav-anchor" id="A-simple-example-1" href="#A-simple-example-1">A simple example</a></h2><p>When recording, you can make changes to any aspect of the Scene or its plots.  </p><p>A simple example is below:</p><div><pre><code class="language-julia">using AbstractPlotting
+
+ scene = lines(rand(10); linewidth=10)
+
+ record(scene, &quot;line_changing_colour.mp4&quot;, 1:255; framerate = 60) do i
+        scene.plots[2][:color] = RGBf0(i/255, (255 - i)/255, 0) # animate scene
+        # `scene.plots` gives the plots of the Scene.
+        # `scene.plots[1]` is always the Axis if it exists,
+        # and `scene.plots[2]` onward are the user-defined plots.
+end
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <video controls autoplay loop muted>
+  <source src="https://simondanisch.github.io/ReferenceImages/gallery//line_changing_colour/media/line_changing_colour.mp4" type="video/mp4">
+  Your browser does not support mp4. Please use a modern browser like Chrome or Firefox.
+</video>
+
+    </p>
+</div>
+
+<section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="AbstractPlotting.record" href="#AbstractPlotting.record"><code>AbstractPlotting.record</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-julia">record(func, scene, path; framerate = 24)
+record(func, scene, path, iter; framerate = 24)</code></pre><p>Records the Scene <code>scene</code> after the application of <code>func</code> on it for each element in <code>itr</code> (any iterator).  <code>func</code> must accept an element of <code>itr</code>.</p><p>The animation is then saved to <code>path</code>, with the format determined by <code>path</code>&#39;s extension.  Allowable extensions are:</p><ul><li><code>.mkv</code>  (the default, doesn&#39;t need to convert)</li><li><code>.mp4</code>  (good for Web, most supported format)</li><li><code>.webm</code> (smallest file size)</li><li><code>.gif</code>  (largest file size for the same quality)</li></ul><p><code>.mp4</code> and <code>.mk4</code> are marginally bigger and <code>.gif</code>s are up to 6 times bigger with the same quality!</p><p>Typical usage patterns would look like:</p><pre><code class="language-julia">record(scene, &quot;video.mp4&quot;, itr) do i
+    func(i) # or some other manipulation of the Scene
+end</code></pre><p>or, for more tweakability,</p><pre><code class="language-julia">record(scene, &quot;test.gif&quot;) do io
+    for i = 1:100
+        func!(scene)     # animate scene
+        recordframe!(io) # record a new frame
+    end
+end</code></pre><p>If you want a more tweakable interface, consider using <a href="abstractplotting_api.html#AbstractPlotting.VideoStream-Tuple{Scene}"><code>VideoStream</code></a> and <a href="abstractplotting_api.html#FileIO.save-Tuple{String,VideoStream}"><code>save</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia">scene = lines(rand(10))
+record(scene, &quot;test.gif&quot;) do io
+    for i in 1:255
+        scene.plots[:color] = Colors.RGB(i/255, (255 - i)/255, 0) # animate scene
+        recordframe!(io)
+    end
+end</code></pre><p>or</p><pre><code class="language-julia">scene = lines(rand(10))
+record(scene, &quot;test.gif&quot;, 1:255) do i
+    scene.plots[:color] = Colors.RGB(i/255, (255 - i)/255, 0) # animate scene
+end</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaPlots/AbstractPlotting.jl/blob/0a17469002b8b50d19b50931dc100e27f588f132/src/display.jl#L343-L400">source</a><div><div><pre><code class="language-julia">record(func, scene, path, iter; framerate = 24)</code></pre><p>This is simply a shorthand for</p><p>usage:</p><pre><code class="language-example">    scene = lines(rand(10))
+    record(scene, &quot;test.gif&quot;, 1:100) do i
+        scene.plots[:color] = Colors.RGB(i/255, 0, 0) # animate scene
+    end</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaPlots/AbstractPlotting.jl/blob/0a17469002b8b50d19b50931dc100e27f588f132/src/display.jl#L407-L419">source</a></section><p>In both cases, the returned value is a path pointing to the location of the recorded file.</p><h3><a class="nav-anchor" id="Animation-using-time-1" href="#Animation-using-time-1">Animation using time</a></h3><p>To animate a scene, you can also create a <code>Node</code>, e.g.:</p><pre><code class="language-julia">time = Node(0.0)</code></pre><p>and use <code>lift</code> on the Node to set up a pipeline to access its value. For example:</p><pre><code class="language-julia">scene = Scene()
+time = Node(0.1)
+myfunc(v, t) = sin.(v .* t)
+positions = lift(t -&gt; myfunc.(range(0, stop=2pi, length=50), t), time)
+scene = lines!(scene, positions)</code></pre><p>now, whenever the Node <code>time</code> is updated (e.g. when you <code>push!</code> to it), the plot will also be updated.</p><pre><code class="language-julia">push!(time, Base.time())</code></pre><p>You can also set most attributes equal to <code>Observable</code>s, so that you need only update a single variable (like time) during your animation loop.  A translation of the first example to this <code>Observables</code> paradigm is below:</p><div><pre><code class="language-julia">using AbstractPlotting
+
+ &quot;&#39;Time&#39; - an Observable that controls the animation&quot;
+ t = Node(0)
+
+ &quot;The colour of the line&quot;
+ c = lift(t) do t
+         RGBf0(t/255, (255 - t)/255, 0)
+     end
+
+ scene = lines(rand(10); linewidth=10, color = c)
+
+ record(scene, &quot;line_changing_colour_with_observables.mp4&quot;, 1:255; framerate = 60) do i
+     t[] = i # update `t`&#39;s value
+end
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <video controls autoplay loop muted>
+  <source src="https://simondanisch.github.io/ReferenceImages/gallery//line_changing_colour_with_observables/media/line_changing_colour_with_observables.mp4" type="video/mp4">
+  Your browser does not support mp4. Please use a modern browser like Chrome or Firefox.
+</video>
+
+    </p>
+</div>
+
+<p>A more complicated example:</p><div><pre><code class="language-julia">using AbstractPlotting
+
+ scene = Scene()
+
+ f(t, v, s) = (sin(v + t) * s, cos(v + t) * s, (cos(v + t) + sin(v)) * s)
+ t = Node(Base.time()) # create a life signal
+ limits = FRect3D(Vec3f0(-1.5, -1.5, -3), Vec3f0(3, 3, 6))
+ p1 = meshscatter!(scene, lift(t-&gt; f.(t, range(0, stop = 2pi, length = 50), 1), t), markersize = 0.05)[end]
+ p2 = meshscatter!(scene, lift(t-&gt; f.(t * 2.0, range(0, stop = 2pi, length = 50), 1.5), t), markersize = 0.05)[end]
+
+ lines = lift(p1[1], p2[1]) do pos1, pos2
+     map((a, b)-&gt; (a, b), pos1, pos2)
+ end
+ linesegments!(scene, lines, linestyle = :dot, limits = limits)
+ # record a video
+ N = 150
+ record(scene, &quot;record_video.mp4&quot;, 1:N) do i
+     push!(t, Base.time())
+end
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <video controls autoplay loop muted>
+  <source src="https://simondanisch.github.io/ReferenceImages/gallery//record_video/media/record_video.mp4" type="video/mp4">
+  Your browser does not support mp4. Please use a modern browser like Chrome or Firefox.
+</video>
+
+    </p>
+</div>
+
+<h2><a class="nav-anchor" id="More-complex-examples-1" href="#More-complex-examples-1">More complex examples</a></h2><div><pre><code class="language-julia">using AbstractPlotting
+
+ scene = Scene();
+ function xy_data(x, y)
+     r = sqrt(x^2 + y^2)
+     r == 0.0 ? 1f0 : (sin(r)/r)
+ end
+
+ r = range(-2, stop = 2, length = 50)
+ surf_func(i) = [Float32(xy_data(x*i, y*i)) for x = r, y = r]
+ z = surf_func(20)
+ surf = surface!(scene, r, r, z)[end]
+
+ wf = wireframe!(scene, r, r, lift(x-&gt; x .+ 1.0, surf[3]),
+     linewidth = 2f0, color = lift(x-&gt; to_colormap(x)[5], surf[:colormap])
+ )
+ N = 150
+ scene
+ record(scene, &quot;animated_surface_and_wireframe.mp4&quot;, range(5, stop = 40, length = N)) do i
+     surf[3] = surf_func(i)
+end
+
+</code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <video controls autoplay loop muted>
+  <source src="https://simondanisch.github.io/ReferenceImages/gallery//animated_surface_and_wireframe/media/animated_surface_and_wireframe.mp4" type="video/mp4">
+  Your browser does not support mp4. Please use a modern browser like Chrome or Firefox.
+</video>
+
+    </p>
+</div>
+
+<p>You can see yet more complicated examples in the <a href="index.html">Example Gallery</a>!</p><footer><hr/><a class="previous" href="axis.html"><span class="direction">Previous</span><span class="title">Axis</span></a><a class="next" href="interaction.html"><span class="direction">Next</span><span class="title">Interaction</span></a></footer></article></body></html>

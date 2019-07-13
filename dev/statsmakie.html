@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>StatsMakie Tutorial · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li class="current"><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a><ul class="internal"><li><a class="toctext" href="#Grouping-data-by-discrete-variables-1">Grouping data by discrete variables</a></li><li><a class="toctext" href="#Styling-data-with-continuous-variables-1">Styling data with continuous variables</a></li><li><a class="toctext" href="#Split-apply-combine-strategy-with-a-plot-1">Split-apply-combine strategy with a plot</a></li><li><a class="toctext" href="#What-if-I-have-data-instead?-1">What if I have data instead?</a></li><li><a class="toctext" href="#Wide-data-1">Wide data</a></li><li><a class="toctext" href="#Analysis-of-data-1">Analysis of data</a></li><li><a class="toctext" href="#Statistical-plot-types-1">Statistical plot types</a></li></ul></li><li><a class="toctext" href="help_functions.html">Help functions</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Basics</li><li><a href="statsmakie.html">StatsMakie Tutorial</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/statsmakie.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>StatsMakie Tutorial</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="StatsMakie-Tutorial-1" href="#StatsMakie-Tutorial-1">StatsMakie Tutorial</a></h1><p>This tutorial shows how to create data visualizations using the StatsMakie grouping and styling APIs as well as the StatsMakie statistical recipes.</p><h2><a class="nav-anchor" id="Grouping-data-by-discrete-variables-1" href="#Grouping-data-by-discrete-variables-1">Grouping data by discrete variables</a></h2><p>The first feature that StatsMakie adds to Makie is the ability to group data by some discrete variables and use those variables to style the result. Let&#39;s first create some vectors to play with:</p><div><pre><code class="language-julia">using AbstractPlotting
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>StatsMakie Tutorial · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li class="current"><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a><ul class="internal"><li><a class="toctext" href="#Grouping-data-by-discrete-variables-1">Grouping data by discrete variables</a></li><li><a class="toctext" href="#Styling-data-with-continuous-variables-1">Styling data with continuous variables</a></li><li><a class="toctext" href="#Split-apply-combine-strategy-with-a-plot-1">Split-apply-combine strategy with a plot</a></li><li><a class="toctext" href="#What-if-my-data-is-in-a-table,-such-as-a-DataFrame?-1">What if my data is in a table, such as a DataFrame?</a></li><li><a class="toctext" href="#Analysis-of-data-1">Analysis of data</a></li><li><a class="toctext" href="#Statistical-plot-types-1">Statistical plot types</a></li></ul></li><li><a class="toctext" href="help_functions.html">Help functions</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Basics</li><li><a href="statsmakie.html">StatsMakie Tutorial</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/statsmakie.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>StatsMakie Tutorial</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="StatsMakie-Tutorial-1" href="#StatsMakie-Tutorial-1">StatsMakie Tutorial</a></h1><p>This tutorial shows how to create data visualizations using the StatsMakie grouping and styling APIs as well as the StatsMakie statistical recipes.</p><h2><a class="nav-anchor" id="Grouping-data-by-discrete-variables-1" href="#Grouping-data-by-discrete-variables-1">Grouping data by discrete variables</a></h2><p>The first feature that StatsMakie adds to Makie is the ability to group data by some discrete variables and use those variables to style the result. Let&#39;s first create some vectors to play with:</p><div><pre><code class="language-julia">using AbstractPlotting
  using StatsMakie
  using DataFrames, RDatasets
  using StatsMakie: linear, smooth
@@ -148,7 +148,7 @@
     </p>
 </div>
 
-<p>The default plot type is determined by the dimensionality of the input and the analysis: with two variables one would get a heatmap:</p><div><pre><code class="language-julia">
+<p>The default plot type is determined by the dimensionality of the input and the analysis. A <code>histogram</code> analysis over one input variable produces a bar plot:</p><div><pre><code class="language-julia">
 
  plot(histogram, y)
  </code></pre></div><div style="display:inline-block">
@@ -158,7 +158,7 @@
     </p>
 </div>
 
-<p>This plots is reasonably customizable in that one can pass keywords arguments to the <code>histogram</code> analysis:</p><div><pre><code class="language-julia">
+<p>whereas with two variables one would get a heatmap:</p><div><pre><code class="language-julia">
 
  plot(histogram, x, y)
 
@@ -169,7 +169,7 @@
     </p>
 </div>
 
-<p>and change the default plot type to something else:</p><div><pre><code class="language-julia">
+<p>This plots is reasonably customizable in that one can pass keywords arguments to the <code>histogram</code> analysis:</p><div><pre><code class="language-julia">
 
  plot(histogram(nbins = 30), x, y)
  </code></pre></div><div style="display:inline-block">
@@ -179,7 +179,7 @@
     </p>
 </div>
 
-<p>Of course heatmap is the saner choice, but why not abuse Makie 3D capabilities?</p><p>Other available analysis are <code>density</code> (to use kernel density estimation rather than binning) and <code>frequency</code> (to count occurrences of discrete variables).</p><h2><a class="nav-anchor" id="What-if-I-have-data-instead?-1" href="#What-if-I-have-data-instead?-1">What if I have data instead?</a></h2><p>If one has data instead, it is possible to signal StatsMakie that we are working from a DataFrame (or any table actually) and it will interpret symbols as columns:</p><div><pre><code class="language-julia">
+<p>and change the default plot type to something else:</p><div><pre><code class="language-julia">
 
  wireframe(histogram(nbins = 30), x, y)
  </code></pre></div><div style="display:inline-block">
@@ -189,7 +189,7 @@
     </p>
 </div>
 
-<p>And everything else works as usual:</p><div><pre><code class="language-julia">
+<p>Of course heatmap is the saner choice, but why not abuse Makie 3D capabilities?</p><p>Other available analysis are <code>density</code> (to use kernel density estimation rather than binning) and <code>frequency</code> (to count occurrences of discrete variables).</p><h2><a class="nav-anchor" id="What-if-my-data-is-in-a-table,-such-as-a-DataFrame?-1" href="#What-if-my-data-is-in-a-table,-such-as-a-DataFrame?-1">What if my data is in a table, such as a DataFrame?</a></h2><p>It is possible to signal StatsMakie that we are working from a DataFrame (or any table actually) and it will interpret symbols as columns:</p><div><pre><code class="language-julia">
 
  iris = RDatasets.dataset(&quot;datasets&quot;, &quot;iris&quot;)
  scatter(Data(iris), Group(:Species), :SepalLength, :SepalWidth)
@@ -200,7 +200,7 @@
     </p>
 </div>
 
-<div><pre><code class="language-julia">
+<p>And everything else works as usual:</p><div><pre><code class="language-julia">
  # use Position.stack to signal that you want bars stacked vertically rather than superimposed
  plot(Position.stack, histogram, Data(iris), Group(:Species), :SepalLength)
  </code></pre></div><div style="display:inline-block">
@@ -210,7 +210,7 @@
     </p>
 </div>
 
-<h2><a class="nav-anchor" id="Wide-data-1" href="#Wide-data-1">Wide data</a></h2><p>Other than comparing the same column split by a categorical variable, one may also compare different columns put side by side (here in a <code>Tuple</code>, <code>(:PetalLength, :PetalWidth)</code>). The attribute that styles them has to be set to <code>bycolumn</code>. Here color will distinguish <code>:PetalLength</code> versus <code>:PetalWidth</code> whereas the marker will distinguish the species.</p><div><pre><code class="language-julia">
+<div><pre><code class="language-julia">
 
  wireframe(
      density(trim=true),
@@ -220,6 +220,20 @@
  </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
         <img src="https://simondanisch.github.io/ReferenceImages/gallery//statsmakie/media/image21.jpg" alt="">
+
+    </p>
+</div>
+
+<h3><a class="nav-anchor" id="Plotting-multiple-columns-1" href="#Plotting-multiple-columns-1">Plotting multiple columns</a></h3><p>Other than comparing the same column split by a categorical variable, one may also compare different columns put side by side (here in a <code>Tuple</code>, <code>(:PetalLength, :PetalWidth)</code>). The attribute that styles them has to be set to <code>bycolumn</code>. Here color will distinguish <code>:PetalLength</code> versus <code>:PetalWidth</code> whereas the marker will distinguish the species.</p><div><pre><code class="language-julia">
+
+ scatter(
+     Data(iris),
+     Group(marker = :Species, color = bycolumn),
+     :SepalLength, (:PetalLength, :PetalWidth)
+ )
+ </code></pre></div><div style="display:inline-block">
+    <p style="display:inline-block; text-align: center">
+        <img src="https://simondanisch.github.io/ReferenceImages/gallery//statsmakie/media/image22.jpg" alt="">
 
     </p>
 </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Extending · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li></ul></li><li><span class="toctext">Documentation</span><ul><li><a class="toctext" href="scenes.html">Scenes</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="cameras.html">Cameras</a></li><li><a class="toctext" href="backends.html">Backends</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="devdocs.html">Devdocs</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li><a href="extending.html">Extending</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/extending.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Extending</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Extending-1" href="#Extending-1">Extending</a></h1><p>There are 4 ways to extend Makie:</p><ol><li>By creating a new function combining multiple plotting commands (duh)</li><li>By overloading conversions for your custom type</li><li>By overloading plot(...) for your own type</li><li>By adding a new primitive + shader</li></ol><h2><a class="nav-anchor" id="Option-1-1" href="#Option-1-1">Option 1</a></h2><p>The first option is quite trivial and can be done in any plotting package and language: just create a function that scripts together a Plot.</p><h2><a class="nav-anchor" id="Option-2-1" href="#Option-2-1">Option 2</a></h2><p>The plotting pipeline heavily relies on conversion functions which check the attributes for validity, document what&#39;s possible to pass and convert them to the types that the backends need. They usually look like this:</p><pre><code class="language-julia">to_positions(backend, positions) = Point3f0.(positions) # E.g. everything that can be converted to a Point</code></pre><p>As you can see, the first argument is the backend, so you can overload this for a specific backend or for a specific position type. This can look something like this:</p><p>@library[example] &quot;overload to position&quot;</p><p>since the pipeline for converting attributes also knows about Circle now, we can update the attribute directly with our own type</p><p>@library[example] &quot;change size&quot;</p><h2><a class="nav-anchor" id="Option-3-1" href="#Option-3-1">Option 3</a></h2><p>Option 3 is very similar to Plots.jl recipes. Inside the function you can just use all of the plotting and drawing API to create a rich visual representation of your type. The signature that needs overloading is:</p><pre><code class="language-julia">function plot(obj::MyType, kw_args::Dict)
+    # use primitives and other recipes to create a new plot
+    scatter(obj, kw_arg[:my_attribute])
+    lines(...)
+    polygon(...)
+end</code></pre><h2><a class="nav-anchor" id="Option-4-1" href="#Option-4-1">Option 4</a></h2><p>Option 4 is pretty unique and is a real extension of Makie&#39;s functionality as it adds a new primitive drawing type. This interface will likely change a lot in the future, since it carries quite a lot of technical debt from the design of GLAbstraction + GLVisualize, but this is how you can do it right now:</p><p>You will need to create defaults for the attributes of your new visual. For a documentation on how to use this macro look at <a href="devdocs.html#Devdocs-1">Devdocs</a>.</p><pre><code class="language-julia">
+my_attribute_convert(A::Array) = Texture(A)
+my_attribute_convert(A::Texture) = A
+my_attribute_convert(A) = error(&quot;A needs to be an array or Texture. Found: $(typeof(A))&quot;)
+
+@default function my_drawing_type(scene, kw_args)
+    my_attribute = my_attribute_convert(my_attribute)
+    another_attribute = to_float(another_attribute) # always gets converted to Float32
+end
+
+function my_drawing_type(main_object::MyType, kw_args::Dict)
+    # optionally expand keyword arguments. E.g. m = (1, :white) becomes markersize = 1, markercolor = :white
+    kw_args = expand_kwargs(kw_args)
+    scene = get_global_scene()
+    # The default macro adds a _defaults to the function name
+    kw_args = my_drawing_type_defaults(scene, kw_args) # fill in and convert attributes
+
+    boundingbox = Node(AABB(Vec3f0(0), Vec3f0(1))) # calculate a boundingbox from your data
+
+    primitive = GL_TRIANGLES
+
+    vsh = vert&quot;&quot;&quot;
+        {{GLSL_VERSION}}
+        in vec2 position;
+        void main(){
+            gl_Position = vec4(position, 0, 1.0);
+        }
+    &quot;&quot;&quot;
+
+    fsh = frag&quot;&quot;&quot;
+        {{GLSL_VERSION}}
+        out vec4 outColor;
+        void main() {
+            outColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    &quot;&quot;&quot;
+    program = LazyShader(vsh, fsh)
+    robj = std_renderobject(shader_uniforms, program, boundingbox, primitive, nothing)
+    # The attributes that you add to the scene should be all signals and all editable.
+    # if an attribute is fixed, don&#39;t add it to the scene
+    insert_scene!(scene, :scatter, viz, attributes)
+    attributes
+end
+</code></pre><footer><hr/></footer></article></body></html>

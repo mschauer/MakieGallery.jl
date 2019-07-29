@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Axis · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li></ul></li><li><span class="toctext">Documentation</span><ul><li><a class="toctext" href="scenes.html">Scenes</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="cameras.html">Cameras</a></li><li><a class="toctext" href="backends.html">Backends</a></li><li class="current"><a class="toctext" href="axis.html">Axis</a><ul class="internal"><li><a class="toctext" href="#Interacting-with-the-Axis-1">Interacting with the Axis</a></li><li><a class="toctext" href="#Axis2D-1"><code>Axis2D</code></a></li><li><a class="toctext" href="#Axis3D-1"><code>Axis3D</code></a></li></ul></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="devdocs.html">Devdocs</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Documentation</li><li><a href="axis.html">Axis</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/axis.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Axis</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Axis-1" href="#Axis-1">Axis</a></h1><p>The axis is just a scene object, making it easy to manipulate and share between plots. Axis objects also contains the mapping you want to apply to the data and can interactively be changed. An Axis object can be created from any boundingbox and inserted into any plot.</p><p>There are two types of axes: <code>Axis2D</code> and <code>Axis3D</code>.</p><h2><a class="nav-anchor" id="Interacting-with-the-Axis-1" href="#Interacting-with-the-Axis-1">Interacting with the Axis</a></h2><p>One can quite easily interact with the attributes of the axis like with any other plot.</p><p>You can access the axis of a <code>scene</code> by doing</p><pre><code class="language-none">axis = scene[Axis]</code></pre><p>The axis attributes are nested, and there are different attributes depending on whether it is an <code>Axis2D</code> or <code>Axis3D</code> object.</p><p>You can access the nested attributes in multiple ways. Take the nested attribute <code>axis -&gt; :names -&gt; :axisnames</code>, for example:</p><ol><li><code>axis[:names, :axisnames] = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></li><li><code>axis[:names][:axisnames] = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></li><li><code>axis = (names = (axisnames = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;),),)</code></li></ol><h3><a class="nav-anchor" id="Examples-1" href="#Examples-1">Examples</a></h3><div><pre><code class="language-julia">using Makie
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Axis · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li></ul></li><li><span class="toctext">Documentation</span><ul><li><a class="toctext" href="scenes.html">Scenes</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li><a class="toctext" href="colors.html">Colors</a></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="cameras.html">Cameras</a></li><li><a class="toctext" href="backends.html">Backends</a></li><li class="current"><a class="toctext" href="axis.html">Axis</a><ul class="internal"><li><a class="toctext" href="#Interacting-with-the-Axis-1">Interacting with the Axis</a></li><li><a class="toctext" href="#Axis2D-1"><code>Axis2D</code></a></li><li><a class="toctext" href="#Axis3D-1"><code>Axis3D</code></a></li></ul></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="devdocs.html">Devdocs</a></li><li><a class="toctext" href="gallery.html">MakieGallery</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Documentation</li><li><a href="axis.html">Axis</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/axis.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Axis</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Axis-1" href="#Axis-1">Axis</a></h1><p>The axis is just a scene object, making it easy to manipulate and share between plots. Axis objects also contains the mapping you want to apply to the data and can interactively be changed. An Axis object can be created from any boundingbox and inserted into any plot.</p><p>There are two types of axes: <code>Axis2D</code> and <code>Axis3D</code>.</p><h2><a class="nav-anchor" id="Interacting-with-the-Axis-1" href="#Interacting-with-the-Axis-1">Interacting with the Axis</a></h2><p>One can quite easily interact with the attributes of the axis like with any other plot.</p><p>You can access the axis of a <code>scene</code> by doing</p><pre><code class="language-none">axis = scene[Axis]</code></pre><p>The axis attributes are nested, and there are different attributes depending on whether it is an <code>Axis2D</code> or <code>Axis3D</code> object.</p><p>You can access the nested attributes in multiple ways. Take the nested attribute <code>axis -&gt; :names -&gt; :axisnames</code>, for example:</p><ol><li><code>axis[:names, :axisnames] = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></li><li><code>axis[:names][:axisnames] = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></li><li><code>axis = (names = (axisnames = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;),),)</code></li></ol><h3><a class="nav-anchor" id="Examples-1" href="#Examples-1">Examples</a></h3><div><pre><code class="language-julia">using Makie
 
  scene = Scene(resolution = (500, 500))
  scatter!(scene, Point3f0[(1,0,0), (0,1,0), (0,0,1)], marker = [:x, :circle, :cross])
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//unicode_marker/media/image.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//unicode_marker/media/image.jpg" alt="">
 
     </p>
 </div>
@@ -53,7 +53,7 @@
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis___surface/media/image.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis___surface/media/image.jpg" alt="">
 
     </p>
 </div>
@@ -100,84 +100,84 @@
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-1.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-1.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-10.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-10.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-11.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-11.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-12.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-12.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-2.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-2.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-3.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-3.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-4.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-4.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-5.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-5.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-6.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-6.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-7.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-7.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-8.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-8.jpg" alt="">
 
     </p>
 </div>
 
 <div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//axis_theming/media/axis_theming-9.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//axis_theming/media/axis_theming-9.jpg" alt="">
 
     </p>
 </div>

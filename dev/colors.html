@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Colors · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li></ul></li><li><span class="toctext">Documentation</span><ul><li><a class="toctext" href="scenes.html">Scenes</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li class="current"><a class="toctext" href="colors.html">Colors</a><ul class="internal"><li><a class="toctext" href="#Colors-2">Colors</a></li><li><a class="toctext" href="#Colormaps-1">Colormaps</a></li><li><a class="toctext" href="#Libraries-1">Libraries</a></li><li><a class="toctext" href="#Color-legends-1">Color legends</a></li></ul></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="cameras.html">Cameras</a></li><li><a class="toctext" href="backends.html">Backends</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="devdocs.html">Devdocs</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Documentation</li><li><a href="colors.html">Colors</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/colors.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Colors</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Colors-1" href="#Colors-1">Colors</a></h1><p><code>Makie</code> has support for you to color your plots however you want to. You can manipulate the color of a plot by using the <code>color</code> keyword, and change the colormap by using the <code>colormap</code> keyword.</p><h2><a class="nav-anchor" id="Colors-2" href="#Colors-2">Colors</a></h2><p>For line plots, you can provide a single color or symbol that will color the entire line; or, you can provide an array of values that map to colors using a colormap.</p><p>Any color symbol supported by Color.jl is supported, check out their page on <a href="http://juliagraphics.github.io/Colors.jl/latest/namedcolors.html">named colors</a> to see what you can get away with!  You can also pass RGB or RGBA values.</p><h2><a class="nav-anchor" id="Colormaps-1" href="#Colormaps-1">Colormaps</a></h2><p>Colormaps are mappings of values to colors.  You can supply the coloring values using the <code>color</code> keyword argument, and the colormap will automatically be adjusted to fit those values.  THe default colormap is <code>viridis</code>, which looks like this:</p><div><pre><code class="language-julia">using Makie
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Colors · Makie.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="index.html"><img class="logo" src="assets/logo.png" alt="Makie.jl logo"/></a><h1>Makie.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search.html"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="index.html">Home</a></li><li><span class="toctext">Basics</span><ul><li><a class="toctext" href="basic-tutorials.html">Tutorial</a></li><li><a class="toctext" href="statsmakie.html">StatsMakie Tutorial</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li><li><a class="toctext" href="functions-overview.html">Plotting functions overview</a></li><li><a class="toctext" href="animation.html">Animation</a></li><li><a class="toctext" href="interaction.html">Interaction</a></li></ul></li><li><span class="toctext">Documentation</span><ul><li><a class="toctext" href="scenes.html">Scenes</a></li><li><a class="toctext" href="signatures.html">Plot function signatures</a></li><li><a class="toctext" href="plot-attributes.html">Plot attributes</a></li><li class="current"><a class="toctext" href="colors.html">Colors</a><ul class="internal"><li><a class="toctext" href="#Colors-2">Colors</a></li><li><a class="toctext" href="#Colormaps-1">Colormaps</a></li><li><a class="toctext" href="#Libraries-1">Libraries</a></li><li><a class="toctext" href="#Color-legends-1">Color legends</a></li></ul></li><li><a class="toctext" href="theming.html">Config file</a></li><li><a class="toctext" href="cameras.html">Cameras</a></li><li><a class="toctext" href="backends.html">Backends</a></li><li><a class="toctext" href="axis.html">Axis</a></li><li><a class="toctext" href="recipes.html">Plot Recipes</a></li><li><a class="toctext" href="output.html">Output</a></li><li><a class="toctext" href="troubleshooting.html">Troubleshooting</a></li></ul></li><li><span class="toctext">Developer Documentation</span><ul><li><a class="toctext" href="why-makie.html">Why <code>Makie</code>?</a></li><li><a class="toctext" href="devdocs.html">Devdocs</a></li><li><a class="toctext" href="gallery.html">MakieGallery</a></li><li><a class="toctext" href="abstractplotting_api.html">AbstractPlotting Reference</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li>Documentation</li><li><a href="colors.html">Colors</a></li></ul><a class="edit-page" href="https://github.com/JuliaPlots/MakieGallery.jl/blob/master/docs/src/colors.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Colors</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Colors-1" href="#Colors-1">Colors</a></h1><p><code>Makie</code> has support for you to color your plots however you want to. You can manipulate the color of a plot by using the <code>color</code> keyword, and change the colormap by using the <code>colormap</code> keyword.</p><h2><a class="nav-anchor" id="Colors-2" href="#Colors-2">Colors</a></h2><p>For line plots, you can provide a single color or symbol that will color the entire line; or, you can provide an array of values that map to colors using a colormap.</p><p>Any color symbol supported by Color.jl is supported, check out their page on <a href="http://juliagraphics.github.io/Colors.jl/latest/namedcolors.html">named colors</a> to see what you can get away with!  You can also pass RGB or RGBA values.</p><h2><a class="nav-anchor" id="Colormaps-1" href="#Colormaps-1">Colormaps</a></h2><p>Colormaps are mappings of values to colors.  You can supply the coloring values using the <code>color</code> keyword argument, and the colormap will automatically be adjusted to fit those values.  THe default colormap is <code>viridis</code>, which looks like this:</p><div><pre><code class="language-julia">using Makie
 
  c = to_colormap(:viridis) # get colors of colormap
 
@@ -13,7 +13,7 @@
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//viridis_color_scheme/media/image.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//viridis_color_scheme/media/image.jpg" alt="">
 
     </p>
 </div>
@@ -27,7 +27,7 @@
 
  </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//colormap_collection/media/image1.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//colormap_collection/media/image1.jpg" alt="">
 
     </p>
 </div>
@@ -38,7 +38,7 @@
 
  </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//colormap_collection/media/image2.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//colormap_collection/media/image2.jpg" alt="">
 
     </p>
 </div>
@@ -49,7 +49,7 @@
 
  </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//colormap_collection/media/image3.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//colormap_collection/media/image3.jpg" alt="">
 
     </p>
 </div>
@@ -60,7 +60,7 @@
 
  </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//colormap_collection/media/image4.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//colormap_collection/media/image4.jpg" alt="">
 
     </p>
 </div>
@@ -72,7 +72,7 @@
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//colormap_collection/media/image5.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//colormap_collection/media/image5.jpg" alt="">
 
     </p>
 </div>
@@ -118,7 +118,7 @@
 
 </code></pre></div><div style="display:inline-block">
     <p style="display:inline-block; text-align: center">
-        <img src="https://simondanisch.github.io/ReferenceImages/gallery//line_with_varying_colors/media/image.jpg" alt="">
+        <img src="http://juliaplots.org/MakieReferenceImages/gallery//line_with_varying_colors/media/image.jpg" alt="">
 
     </p>
 </div>

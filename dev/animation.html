@@ -37,10 +37,10 @@ record(scene, &quot;test.gif&quot;) do io
 end</code></pre><p>or</p><pre><code class="language-julia">scene = lines(rand(10))
 record(scene, &quot;test.gif&quot;, 1:255) do i
     scene.plots[:color] = Colors.RGB(i/255, (255 - i)/255, 0) # animate scene
-end</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaPlots/AbstractPlotting.jl/blob/d04b6f9b946f3a21f7f84fa6b59f2cec2d3d5ea1/src/display.jl#L376-L433">source</a><div><div><pre><code class="language-julia">record(func, scene, path, iter; framerate = 24)</code></pre><p>This is simply a shorthand to wrap a for loop in <code>record</code>.</p><p>Example:</p><pre><code class="language-example">    scene = lines(rand(10))
+end</code></pre></div></div><div><div><pre><code class="language-julia">record(func, scene, path, iter; framerate = 24)</code></pre><p>This is simply a shorthand to wrap a for loop in <code>record</code>.</p><p>Example:</p><pre><code class="language-example">    scene = lines(rand(10))
     record(scene, &quot;test.gif&quot;, 1:100) do i
         scene.plots[:color] = Colors.RGB(i/255, 0, 0) # animate scene
-    end</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaPlots/AbstractPlotting.jl/blob/d04b6f9b946f3a21f7f84fa6b59f2cec2d3d5ea1/src/display.jl#L440-L453">source</a></section><p>In both cases, the returned value is a path pointing to the location of the recorded file.</p><h2><a class="nav-anchor" id="Animation-using-time-1" href="#Animation-using-time-1">Animation using time</a></h2><p>To animate a scene, you can also create a <code>Node</code>, e.g.:</p><pre><code class="language-julia">time = Node(0.0)</code></pre><p>and use <code>lift</code> on the Node to set up a pipeline to access its value. For example:</p><pre><code class="language-julia">scene = Scene()
+    end</code></pre></div></div></section><p>In both cases, the returned value is a path pointing to the location of the recorded file.</p><h2><a class="nav-anchor" id="Animation-using-time-1" href="#Animation-using-time-1">Animation using time</a></h2><p>To animate a scene, you can also create a <code>Node</code>, e.g.:</p><pre><code class="language-julia">time = Node(0.0)</code></pre><p>and use <code>lift</code> on the Node to set up a pipeline to access its value. For example:</p><pre><code class="language-julia">scene = Scene()
 time = Node(0.1)
 myfunc(v, t) = sin.(v .* t)
 positions = lift(t -&gt; myfunc.(range(0, stop=2pi, length=50), t), time)

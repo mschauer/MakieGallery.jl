@@ -627,7 +627,7 @@
             P.γ*x[1]-x[3] - P.β,
         )
         f(x) = f(x, P)
-        streamplot(f, -1.5..1.5, -1.5..1.5, -1.5..1.5, colormap = :magma, gridsize = (10, 10), arrow_size = 0.06)
+        streamplot(f, -1.5..1.5, -1.5..1.5, -1.5..1.5, colormap = :magma, gridsize = (12, 12, 5), arrow_size = 0.06)
     end
 
     # @cell "2D text in 3D" [text, annotations] begin
